@@ -19,7 +19,8 @@ if (x0==0)
   disp('  ')
 endif
 x1=input('Determinar en x          = ? ');
-n=input('Número de términos de la serie de Taylor = ? ');  % Número de términos de la serie de Taylor 'Order'
+% Número de términos de la serie de Taylor 'Order'
+n=input('Número de términos de la serie de Taylor = ? ');  
 t = sym('t', [1 n]);
 h=zeros(n,1);
 disp('  '); disp('  ');
@@ -47,31 +48,15 @@ fprintf('* Valor verdadero de la función: %10.6f',fx(x1));fprintf('\n');
 disp('  ');
 fprintf('* Error verdadero: %12.8f',abs(fx(x1)-h(n)));fprintf('\n');
 %
-
 % Cálculo del error de truncamiento;
-cent=0;
+%cent=0;
 df=function_handle(diff(f,n));
-if (abs(df(x1))==0)
-  disp('  ');
-  disp('Debido a que la derivada de mayor orden de la serie de Taylor')
-  disp(' es igual a 0, el error de truncamiento se calcula en n=n-1')
-  disp('  ');
-  n = n-1;
-  cent=1;
-  df=function_handle(diff(f,n));
-endif
 trunc=(abs(x1-x0)^(n)/factorial(n))*abs(df(x1));
 trunc1=(abs(x1-x0)^(n)/factorial(n))*abs(df(x0));
 disp(' ')
 fprintf('* Error de truncamiento x : %12.8f',trunc);fprintf('\n');
 fprintf('* Error de truncamiento x0: %12.8f',trunc1);fprintf('\n'); 
-  
-  
-%if (abs(df(x1))>0)
-%  trunc=(abs(x1-x0)^(n)/factorial(n))*abs(df(x1));
-%  trunc1=(abs(x1-x0)^(n)/factorial(n))*abs(df(x0));
-%else 
-%  df=function_handle(diff(f,n-1));
-%  trunc=(abs(x1-x0)^(n-1)/factorial(n-1))*abs(df(x1));
-%  trunc1=(abs(x1-x0)^(n-1)/factorial(n-1))*abs(df(x0));
-%endif
+disp(' ')
+disp('**** Si la función es un polinomio, considerar que para')
+disp('el error de truncamiento se podría tener una derivada constante.')
+disp('Por lo que hay que tener cuidado con este cálculo.')
